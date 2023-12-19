@@ -2,7 +2,7 @@
 
 # REST API
 
-## Введение
+## Введение 
 
 REST API (Representational State Transfer Application Programming Interface) – это архитектурный стиль для разработки веб-сервисов, который основан на принципах REST. REST API позволяет взаимодействовать с удаленным сервером и обмениваться данными между клиентом и сервером посредством HTTP-протокола.
 
@@ -40,7 +40,7 @@ ______________________________________________________________
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -80,7 +80,7 @@ npm install -D @types/cors @types/express @types/node typescript
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -110,67 +110,114 @@ npm install -D @types/cors @types/express @types/node typescript
 
 
 
-## Структура проекта
+### Создание нужных файлов
 
-```
-.
-├── db-connect.sh
-├── tasks
-│   └── 3_Модуль.pdf
-├── flake.lock
-├── flake.nix
-├── package.json
-├── package-lock.json
-├── README.md
-├── src
-│   ├── config.ts
-│   ├── controllers
-│   │   ├── adminController.ts
-│   │   ├── clientController.ts
-│   │   ├── hotelController.ts
-│   │   ├── roomController.ts
-│   │   └── tokenController.ts
-│   ├── entity
-│   │   ├── Admins.ts
-│   │   ├── Clients.ts
-│   │   ├── Hotels.ts
-│   │   ├── Rooms.ts
-│   │   └── Tokens.ts
-│   ├── index.ts
-│   ├── routes
-│   │   ├── hotelRouter.ts
-│   │   ├── index.ts
-│   │   ├── loginRouter.ts
-│   │   ├── registerRouter.ts
-│   │   ├── roomRouter.ts
-│   │   ├── roomsRouter.ts
-│   │   ├── signupRouter.ts
-│   │   ├── userdataRouter.ts
-│   │   └── usersinroomRouter.ts
-│   └── utils
-│       ├── auth.ts
-│       ├── helper.ts
-│       └── jwt.ts
-└── tsconfig.json
+В файле `package.json` меняем свойства :
+```js
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
 ```
 
-- `.env` Файл с 
-- `.envrc` `flake.lock` `flake.nix` Файлы для установки базы данных
-- `package.json` `package-lock.json` содержит информацию о проекте и его зависимостях
-- `db-connect.sh` Скрипт подключения к базе данных
-- `tsconfig.json` Содержит конфигурацию для TypeScript
-- `README.md` Проектная документация
-- `tasks/3_Модуль.pdf` Задание
-- `src/` Папка с непосредственны кодом
+на
 
-Всё что внутри `src/`
+```js
+  "main": "dist/index.ts",
+  "scripts": {
+    "dev": "clear && tsc && npm run running",
+    "build": "tsc",
+    "running": "node ./dist/index.ts"
+  },
+```
+Свойство `main` указывает на тот файл, который будет запущен, когда ваш пакет будет установлен как зависимость в другом пакете. В данном случае, вы меняете его на `dist/index.ts`, что означает, что основной файл вашего проекта будет находиться в папке `dist`.
 
-- `controllers/` Контроллеры, обрабатывающие HTTP-запросы и взаимодействующие с моделями данных
-- `entity/` Модели данных, представляющие таблицы в базе данных
-- `routes/` Маршруты, определяющие URL-адреса, по которым будет доступно приложение
-- `utils/` Вспомогательные программы используемые по всему приложению
-- `config.ts` Конфигурация для использования приложением
-- `index.ts` Главный файл приложения
+Свойство `scripts` содержит скрипты, которые можно запустить с помощью команды `npm run <script>`.
+
+Также вы добавляете три новых скрипта:
+
+`dev`: Этот скрипт сначала очищает консоль, затем компилирует ваш TypeScript код в JavaScript с помощью tsc, и затем запускает скрипт running.
+`build`: Этот скрипт компилирует ваш TypeScript код в JavaScript с помощью tsc.
+`running`: Этот скрипт запускает ваш основной файл JavaScript с помощью Node.js.
+
+*** Эти изменения позволяют вам легко запускать ваш проект в режиме разработки, компилировать его и запускать скомпилированный код. ***
+
+Итоговый файл `package.json` который должен получиться:
+
+```js
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.ts",
+  "scripts": {
+    "dev": "clear && tsc && node ./dist/index.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "class-validator": "^0.14.0",
+    "config": "^3.3.9",
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-validator": "^7.0.1",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.6.5",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.3.17"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.10.3",
+    "typescript": "^5.3.2"
+  }
+}
+```
+
+______________________________________________________________
+
+
+В корне проекта нужно создать файл `tsconfig.json`
+
+Его содержимое:
+
+```js
+{
+  "compilerOptions": {
+    "lib": [
+      "es5",
+      "es6",
+      "dom"
+    ],
+    "target": "es5",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "outDir": "./dist"
+  }
+}
+```
+
+Давайте разберем, что делает каждое из этих свойств:
+
+- lib: Это опция указывает, какие библиотеки TypeScript должны быть включены в компиляцию. В данном случае, включены es5, es6 и dom.
+- target: Это опция указывает версию ECMAScript, которую TypeScript должен использовать для компиляции. В данном случае, используется es5.
+module: Это опция указывает, какой модульный стандарт использовать. В данном случае, используется commonjs.
+moduleResolution: Это опция указывает, как TypeScript должен разрешать модули. В данном случае, используется node.
+emitDecoratorMetadata: Эта опция включает или отключает генерацию метаданных для декораторов. В данном случае, включена.
+experimentalDecorators: Эта опция включает или отключает экспериментальную поддержку декораторов. В данном случае, включена.
+esModuleInterop: Эта опция включает или отключает совместимость с ES модулями. В данном случае, включена.
+skipLibCheck: Эта опция включает или отключает проверку типов в библиотеках. В данном случае, включена.
+outDir: Эта опция указывает, в какую папку должны быть выведены скомпилированные файлы. В данном случае, в папку ./dist 3.
+В целом, эти настройки позволяют вам контролировать, как TypeScript компилирует ваш код, и адаптировать его под ваши конкретные потребности.
+
+
 
 ## Работа с базой данных
 
