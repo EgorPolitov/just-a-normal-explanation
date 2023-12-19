@@ -57,6 +57,59 @@ ______________________________________________________________
 Пакеты основные (По заданию): `class-validator, config, cors, cross-env, dotenv, express, express-validator, jsonwebtoken, mysql2, reflect-metadata, typeorm`
 Пакеты дополнительные (Упростят нам жизнь в дальнейшем): `@types/cors, @types/express, @types/node, typescript`
 
+Если у вас возникнут трудности с пониманием пакетов в процессе работы с проектом - можете прочитать про них [дополнительно](https://docs.google.com/document/d/1VsGqtwd7SSIadfWjbytE5FGQazv0T0YhrcVFEvH06Zk/edit?usp=sharing)
+
+______________________________________________________________
+
+
+Для установки в консоли пишем:
+
+```bash
+npm install class-validator config cors cross-env dotenv express express-validator jsonwebtoken mysql2 reflect-metadata typeorm
+```
+
+```bash
+npm install -D @types/cors @types/express @types/node typescript
+```
+
+Ждём когда пакеты установятся
+
+Файл `package.json` обновился:
+
+```json
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "class-validator": "^0.14.0",
+    "config": "^3.3.9",
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-validator": "^7.0.1",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.6.5",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.3.17"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.10.3",
+    "typescript": "^5.3.2"
+  }
+}
+```
+
+
 
 ## Структура проекта
 
