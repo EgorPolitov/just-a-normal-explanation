@@ -252,6 +252,37 @@ JWT_SECRET=JWT_SECRET
 - `DB_PORT=3306`: Это порт базы данных.
 - `JWT_SECRET=JWT_SECRET`: Это секретный ключ, используемый для создания и проверки JSON Web Tokens (JWT).
 
+Далее в корне проекта создаем папку `src`.
+
+В папке `src` создаём файл `index.ts`
+
+Создание папки src и файла index.ts в является общей практикой в разработке.
+Папка src обычно используется для хранения исходного кода проекта. Это помогает отделить исходный код от других файлов, таких как файлы конфигурации или документация.
+
+
+В файле `index.ts` пишем:
+
+```js
+import express from "express"; 
+import dotenv from "dotenv";
+import cors from "cors";
+
+dotenv.config();
+
+const app = express();
+const port = process.env.PORT || 5000;
+
+app.use(cors());
+app.use(express.json()); 
+app.get("/", (req, res) => {
+ res.send("server started!"); 
+});
+
+app.listen(port, () =>
+ console.log(`Server started on port http://localhost:${port}`, new Date())
+);
+```
+
 
 ## Работа с базой данных
 
